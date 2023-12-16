@@ -4,8 +4,6 @@ services:
     image: linuxserver/smokeping:2.8.2
     restart: always
     hostname: smokeping
-    ports:
-      - "${HOST_PORT}:80"
     volumes:
       - "./volumes/smokeping_config:/config"
       - "./volumes/smokeping_data:/data"
@@ -19,6 +17,8 @@ services:
     restart: always
     depends_on:
       - smokeping
+    ports:
+      - "${HOST_PORT}:80"
     volumes:
       - ./nginx_templates:/etc/nginx/templates
       - ${NGINX_SECRET_DIR:?}:/secrets
