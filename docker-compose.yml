@@ -10,6 +10,11 @@ services:
       PUID: 1000
       PGID: 1000
       TZ: Asia/Tokyo
+    logging:
+      driver: fluentd
+      options:
+        tag: docker.smokeping_itako_aoirint_com.smokeping.{{.ID}}
+        fluentd-async: "true"
 
   nginx:
     image: nginx:latest
@@ -24,6 +29,11 @@ services:
       - ${NGINX_LOG_DIR:?}:/logs
     environment:
       - NGINX_ENVSUBST_TEMPLATE_SUFFIX=.nginx
+    logging:
+      driver: fluentd
+      options:
+        tag: docker.smokeping_itako_aoirint_com.nginx.{{.ID}}
+        fluentd-async: "true"
 
   cloudflared:
     image: cloudflare/cloudflared:latest
@@ -33,3 +43,8 @@ services:
       - nginx
     environment:
       TUNNEL_TOKEN: ${CLOUDFLARED_TUNNEL_TOKEN:?}
+    logging:
+      driver: fluentd
+      options:
+        tag: docker.smokeping_itako_aoirint_com.cloudflared.{{.ID}}
+        fluentd-async: "true"
