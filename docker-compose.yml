@@ -26,7 +26,6 @@ services:
     volumes:
       - ./nginx_templates:/etc/nginx/templates
       - ${NGINX_SECRET_DIR:?}:/secrets
-      - ${NGINX_LOG_DIR:?}:/logs
     environment:
       - NGINX_ENVSUBST_TEMPLATE_SUFFIX=.nginx
     logging:
